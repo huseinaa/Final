@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +8,6 @@
     <title>Login Page</title>
 </head>
 <body>
-    <?php
-    require_once '../be/dbuser.php';  
-
-    $message = '';
-
-    if (isset($_POST['login'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];  
-
-        $stmt = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-        $stmt->execute(['username' => $username, 'password' => $password]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user) {
-            $_SESSION['user_id'] = $user['id'];
-            header('Location: admin.php');  
-            exit;
-        } else {
-            $message = 'Login failed. Incorrect username or password.';
-        }
-    }
-    ?>
     <div class="container">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="col-md-6">
@@ -38,10 +16,7 @@
                         <h3 class="card-title mb-0">Login to Your Account</h3>
                     </div>
                     <div class="card-body py-4">
-                        <?php if($message !== ''): ?>
-                            <p class="alert alert-danger"><?php echo $message; ?></p>
-                        <?php endif; ?>
-                        <form method="post">
+                        <form action="../be/login.php" method="post">
                             <div class="form-group mb-3">
                                 <label for="username">Username</label>
                                 <div class="input-group">

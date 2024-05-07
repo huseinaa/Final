@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/css/templatemo.min.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between mb-4">
+            <h1 class="templatemo-title">Admin Dashboard</h1>
+            <div>
+                <a href="signup.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add Admins</a>
+                <a href="index.html" class="btn btn-secondary ml-2"><i class="fas fa-home"></i> Home</a>
+            </div>
+        </div>
+
+        <!-- Load Chef and User Data from Backend -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                fetch('../be/admin.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'action=fetch'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Append data to tables
+                    const chefsTable = document.querySelector('#chefsTable tbody');
+                    const usersTable = document.querySelector('#usersTable tbody');
+
+                    data.chefs.forEach(chef => {
+                        const row = `
+                            <tr>
+                                <td>${chef.platters}</td>
+                                <td>${chef.description}</td>
+                                <td>${chef.is_active ? 'Yes' : 'No'}</td>
+                                <td>
+                                    <form method="post" action="../be/admin.php">
+                                        <input type="hidden" name="chef_id" value="${chef.id}">
+                                        <input type="hidden" name="current_status" value="${chef.is_active}">
+                                        <button type="submit" name="toggle_active" class="btn ${chef.is_active ? 'btn-danger' : 'btn-success'}">
+                                            <i class="fas ${chef.is_active ? 'fa-times-circle' : 'fa-check-circle'}"></i> ${chef.is_active ? 'Deactivate' : 'Activate'}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        `;
+                        chefsTable.innerHTML += row;
+                    });
+
+                    data.users.forEach(user => {
+                        const row = `
+                            <tr>
+                                <td>${user.email}</td>
+                                <td>${user.username}</td>
+                                <td>${user.password}</td>
+                            </tr>
+                        `;
+                        usersTable.innerHTML += row;
+                    });
+                });
+            });
+        </script>
+        <div class="card">
+            <div class="card-header">
+                <h2>Platters</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="chefsTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Platters</th>
+                            <th>Description</th>
+                            <th>Is Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Chef data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Add New Platter</h2>
+            </div>
+            <div class="card-body">
+                <form action="../be/admin.php" method="post">
+                    <div class="form-group mb-3">
+                        <label for="plattersName"><b>Platter Name</b></label>
+                        <input type="text" class="form-control" id="plattersName" name="plattersName" placeholder="Enter platter name" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="description"><b>Description</b></label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Enter description" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="isActive"><b>Is Active</b></label>
+                        <select class="form-control" id="isActive" name="isActive">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <button type="submit" name="addPlatter" class="btn btn-primary">Add Platter</button>
+                </form>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Users</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="usersTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- User data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
