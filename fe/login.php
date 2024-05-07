@@ -33,13 +33,16 @@
     <div class="container">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h3 class="card-title mb-0">Login to Your Account</h3>
+                    </div>
+                    <div class="card-body py-4">
                         <?php if($message !== ''): ?>
                             <p class="alert alert-danger"><?php echo $message; ?></p>
                         <?php endif; ?>
                         <form method="post">
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="username">Username</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -48,7 +51,7 @@
                                     <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-4">
                                 <label for="password">Password</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -57,7 +60,7 @@
                                     <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" required>
                                 </div>
                             </div>
-                            <button type="submit" name="login" class="btn btn-primary">Login</button>
+                            <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
                         </form>
                     </div>
                 </div>
