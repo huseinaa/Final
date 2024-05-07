@@ -4,15 +4,16 @@ require_once '../be/dbuser.php'; // Ensure this path is correct
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
+    $password = $_POST['password'];
 
-    $query="INSERT INTO `users` (`username`,`password`,`email`) VALUES ('$username','$password','$email')";
-    $stmt=$db->query($query);
-    if ($stmt->rowCount()>0)
-        return 1;
-    else
-        return 0;
-
+    // It's important to use prepared statements to prevent SQL injection
+    try {
+        $stmt = $db->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+        $stmt->execute([$username, $password, $email]);
+        header("Location: admin.php");
+    } catch (PDOException $e) {
+        die("Error: " . $e->getMessage());
+    }
 }
 ?>
 

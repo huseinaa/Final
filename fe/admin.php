@@ -20,7 +20,9 @@
 <body>
     <div class="container mt-5">
         <div class="d-flex justify-content-end">
-            <a href="signup.php" class="btn btn-primary">Sign Up</a>
+            <a href="signup.php" class="btn btn-primary">Add Admins</a>
+            <!-- Add this line for the Index button -->
+            <a href="index.html" class="btn btn-secondary ml-2">Home</a>
         </div>
         <h2>Chefs</h2>
         <table class="table">
