@@ -8,7 +8,7 @@
     // Fetch chefs
     $chefsStmt = $db->query("SELECT * FROM chefs");
     $chefs = $chefsStmt->fetchAll(PDO::FETCH_ASSOC);
-    ?>
+?>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -26,15 +26,17 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>Platters</th>
+                    <th>Description</th>
+                    <th>Is Active</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($chefs as $chef): ?>
                     <tr>
-                        <td><?= htmlspecialchars($chef['id']) ?></td>
-                        <td><?= htmlspecialchars($chef['name']) ?></td>
+                        <td><?= htmlspecialchars($chef['platters']) ?></td>
+                        <td><?= htmlspecialchars($chef['description']) ?></td>
+                        <td><?= $chef['IS_ACTIVE'] ? 'Yes' : 'No' ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
