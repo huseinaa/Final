@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/custom.css">
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <?php
+<?php
     require_once '../be/dbuser.php';  
 
     // Fetch users
@@ -19,7 +9,15 @@
     $chefsStmt = $db->query("SELECT * FROM chefs");
     $chefs = $chefsStmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
     <div class="container mt-5">
         <div class="d-flex justify-content-end">
             <a href="signup.php" class="btn btn-primary">Sign Up</a>
@@ -46,17 +44,17 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Username</th>
                     <th>Email</th>
+                    <th>Username</th>
+                    <th>Password</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($users as $user): ?>
                     <tr>
-                        <td><?= htmlspecialchars($user['id']) ?></td>
-                        <td><?= htmlspecialchars($user['username']) ?></td>
                         <td><?= htmlspecialchars($user['email']) ?></td>
+                        <td><?= htmlspecialchars($user['username']) ?></td>
+                        <td><?= htmlspecialchars($user['password']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

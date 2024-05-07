@@ -17,8 +17,8 @@
         $username = $_POST['username'];
         $password = $_POST['password'];  
 
-        $stmt = $db->prepare("SELECT * FROM user WHERE username = :username AND password = :password");
-        $stmt->execute( $params = ['username' => 'superman', 'password' => 'superman'] )
+        $stmt = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+        $stmt->execute(['username' => $username, 'password' => $password]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
